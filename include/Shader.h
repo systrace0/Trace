@@ -26,6 +26,6 @@ namespace engine
 		void setMat4(const std::string& name, const float* value) const;
 
 	private:
-		GLuint m_programID = 0;
+		GLuint m_programID{ 0 };
 	};
 }
