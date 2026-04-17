@@ -2,6 +2,8 @@
 
 #include <glad/glad.h>
 
+#include <string>
+
 namespace engine
 {
 	class Shader
@@ -18,12 +20,12 @@ namespace engine
 		void use() const;
 
 		// Uniform setters
-		void setBool(const char* name, bool value) const;
-		void setInt(const char* name, int value) const;
-		void setFloat(const char* name, float value) const;
+		void setBool(const std::string& name, bool value) const;
+		void setInt(const std::string& name, int value) const;
+		void setFloat(const std::string& name, float value) const;
+		void setMat4(const std::string& name, const float* value) const;
 
 	private:
 		GLuint m_programID = 0;
-		std::string
 	};
 }

@@ -1,9 +1,10 @@
 #include "Shader.h"
 
-#include <string>
+#include "Core.h"
+
 #include <fstream>
-#include <sstream>
 #include <iostream>
+#include <sstream>
 
 // Anonymous namespace - free function that doesn't touch member variables etc.
 // Invisible outside of Shader.cpp & caller doesn't need to know about it
@@ -16,7 +17,8 @@ namespace
 		const char* src = source.c_str();
 		GLuint shader = glCreateShader(type);
 
-		// passing nullptr tells GL to measure string length itself (assumes null-terminated)
+		// passing nullptr tells GL to measure string length itself (assumes
+		// null-terminated)
 		glShaderSource(shader, 1, &src, nullptr);
 
 		glCompileShader(shader);
@@ -28,18 +30,20 @@ namespace
 			GLsizei log_length = 0;
 			GLchar message[1024];
 			glGetShaderInfoLog(shader, 1024, &log_length, message);
-			glDeleteShader(shader);
-			throw std::runtime_error(std::string("Shader compilation failed:\n") + message);
+			glDeleteShader(
+				shader); // Delete shader so the object doesn't leak on the GPU
+			throw std::runtime_error(std::string("Shader compilation failed:\n") +
+				message);
 		}
 
+		return shader;
 	}
-}
+} // namespace
 
 namespace engine
 {
 	Shader::Shader(const char* vertexPath, const char* fragmentPath)
 	{
-		// TODO: stringstream could be replaced with std::string since it's faster through the iteration etc.
 		std::string vertexCode;
 		std::string fragmentCode;
 		std::ifstream vShaderFile;
@@ -72,11 +76,35 @@ namespace engine
 		}
 		catch (std::ifstream::failure& e)
 		{
-			throw std::runtime_error(
-				std::string("Shader file read failed: ") + e.what()
-			);
+			throw std::runtime_error(std::string("Shader file read failed: ") +
+				e.what());
 		}
 
+		GLuint vertex = ::compileShader(GL_VERTEX_SHADER, vertexCode);
+		GLuint fragment = ::compileShader(GL_FRAGMENT_SHADER, fragmentCode);
+
+		m_programID = glCreateProgram();
+
+		glAttachShader(m_programID, vertex);
+		glAttachShader(m_programID, fragment);
+		glLinkProgram(m_programID);
+
+		GLint program_linked;
+		glGetProgramiv(m_programID, GL_LINK_STATUS, &program_linked);
+		if (program_linked != GL_TRUE)
+		{
+			GLsizei log_length = 0;
+			GLchar message[1024];
+			glGetProgramInfoLog(m_programID, 1024, &log_length, message);
+			glDeleteShader(vertex);
+			glDeleteShader(fragment);
+			glDeleteProgram(m_programID);
+			throw std::runtime_error(std::string("Program linking failed:\n") +
+				message);
+		}
+
+		glDeleteShader(vertex);
+		glDeleteShader(fragment);
 	}
 
 	Shader::~Shader()
@@ -87,7 +115,32 @@ namespace engine
 
 	void Shader::use() const
 	{
+		ASSERT(m_programID != 0, "Calling use() on uninitialized shader");
 		glUseProgram(m_programID);
 	}
 
-}
+	void Shader::setBool(const std::string& name, bool value) const
+	{
+		ASSERT(m_programID != 0, "Calling setBool() on uninitialized shader");
+		glUniform1i(glGetUniformLocation(m_programID, name.c_str()), (int)value);
+	}
+
+	void Shader::setInt(const std::string& name, int value) const
+	{
+		ASSERT(m_programID != 0, "Calling setInt() on uninitialized shader");
+		glUniform1i(glGetUniformLocation(m_programID, name.c_str()), value);
+	}
+
+	void Shader::setFloat(const std::string& name, float value) const
+	{
+		ASSERT(m_programID != 0, "Calling setFloat() on uninitialized shader");
+		glUniform1f(glGetUniformLocation(m_programID, name.c_str()), value);
+	}
+
+	void Shader::setMat4(const std::string& name, const float* value) const
+	{
+		ASSERT(m_programID != 0, "Calling setMat4() on uninitialized shader");
+		glUniformMatrix4fv(glGetUniformLocation(m_programID, name.c_str()), 1, GL_FALSE, value);
+	}
+
+} // namespace engine
