@@ -113,6 +113,24 @@ namespace engine
 			glDeleteProgram(m_programID);
 	}
 
+	Shader::Shader(Shader&& other) noexcept
+		: m_programID(other.m_programID)
+	{
+		other.m_programID = 0;
+	}
+
+	Shader& Shader::operator=(Shader&& other) noexcept
+	{
+		if (this != &other)
+		{
+			if (m_programID)
+				glDeleteProgram(m_programID);
+			m_programID = other.m_programID;
+			other.m_programID = 0;
+		}
+		return *this;
+	}
+
 	void Shader::use() const
 	{
 		ASSERT(m_programID != 0, "Calling use() on uninitialized shader");
