@@ -40,7 +40,7 @@ target_include_directories(glad PUBLIC
 # ── Engine executable ─────────────────────────────────────────────────────────
 add_executable(Engine
     src/main.cpp
- "src/Window.cpp" "src/Shader.cpp" "src/VertexArray.cpp" "src/VertexBuffer.cpp")
+ "src/Window.cpp" "src/Shader.cpp" "src/VertexArray.cpp" "src/VertexBuffer.cpp" "src/IndexBuffer.cpp")
 
 target_include_directories(Engine PRIVATE
     include
