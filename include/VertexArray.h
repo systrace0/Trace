@@ -1,0 +1,25 @@
+#pragma once
+
+#include <glad/glad.h>
+
+namespace engine
+{
+	class VertexArray
+	{
+	public:
+		VertexArray();
+		~VertexArray();
+
+		VertexArray(const VertexArray&) = delete;
+		VertexArray& operator=(const VertexArray&) = delete;
+
+		VertexArray(VertexArray&& other) noexcept;
+		VertexArray& operator=(VertexArray&& other) noexcept;
+
+		void bind() const;
+		void unbind() const;
+
+	private:
+		GLuint m_id{ 0 };
+	};
+}

@@ -1,0 +1,25 @@
+#pragma once
+
+#include <glad/glad.h>
+
+namespace engine
+{
+	class VertexBuffer
+	{
+	public:
+		VertexBuffer(const float* data, size_t size, GLenum usage = GL_STATIC_DRAW);
+		~VertexBuffer();
+
+		VertexBuffer(const VertexBuffer&) = delete;
+		VertexBuffer& operator=(const VertexBuffer&) = delete;
+
+		VertexBuffer(VertexBuffer&& other) noexcept;
+		VertexBuffer& operator=(VertexBuffer&& other) noexcept;
+
+		void bind() const;
+		void unbind() const;
+
+	private:
+		GLuint m_id{ 0 };
+	};
+}
