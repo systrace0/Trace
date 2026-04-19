@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.25...4.0)
 project(Engine VERSION 0.1.0 LANGUAGES CXX C)
 
-# C++20. Not 17. Concepts and spans will matter later.
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)  # Don't allow gcc/msvc extensions. Stay portable.
@@ -37,26 +36,16 @@ target_include_directories(glad PUBLIC
     external/glad/include
 )
 
-# ── Engine executable ─────────────────────────────────────────────────────────
-add_executable(Engine
-    src/main.cpp
- "src/Window.cpp" "src/Shader.cpp" "src/VertexArray.cpp" "src/VertexBuffer.cpp" "src/IndexBuffer.cpp")
-
-target_include_directories(Engine PRIVATE
-    include
-)
-
-# Link order matters on some linkers. glad before glfw is fine here.
-target_link_libraries(Engine PRIVATE
-    glad
-    glfw
-)
+# ── Engine sources ─────────────────────────────────────────────────────────
+add_executable(${PROJECT_NAME})
 
 # ── Compiler warnings ─────────────────────────────────────────────────────────
 # This is not optional. Warnings are your first line of defense.
 # A senior engineer with zero warnings is more productive than one with 200 suppressed ones.
 if(MSVC)
-    target_compile_options(Engine PRIVATE /W4)
+    target_compile_options(${PROJECT_NAME} PRIVATE /W4 /FS)
 else()
-    target_compile_options(Engine PRIVATE -Wall -Wextra -Wpedantic)
+    target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wpedantic)
 endif()
+
+add_subdirectory(src)
