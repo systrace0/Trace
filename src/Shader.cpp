@@ -1,7 +1,5 @@
 #include "Shader.h"
 
-#include "Core.h"
-
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -149,13 +147,13 @@ namespace engine
 		glUniform1i(glGetUniformLocation(m_programID, name.c_str()), value);
 	}
 
-	void Shader::setFloat(const std::string& name, float value) const
+	void Shader::setFloat(const std::string& name, F32 value) const
 	{
 		ASSERT(m_programID != 0, "Calling setFloat() on uninitialized shader");
 		glUniform1f(glGetUniformLocation(m_programID, name.c_str()), value);
 	}
 
-	void Shader::setMat4(const std::string& name, const float* value) const
+	void Shader::setMat4(const std::string& name, const F32* value) const
 	{
 		ASSERT(m_programID != 0, "Calling setMat4() on uninitialized shader");
 		glUniformMatrix4fv(glGetUniformLocation(m_programID, name.c_str()), 1, GL_FALSE, value);

@@ -1,5 +1,6 @@
 #include "Window.h"
 #include "glad/glad.h"
+#include "Core.h"
 
 #include <cstdio>
 

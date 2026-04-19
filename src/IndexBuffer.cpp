@@ -2,7 +2,7 @@
 
 namespace engine
 {
-	IndexBuffer::IndexBuffer(const uint32_t* data, size_t size)
+	IndexBuffer::IndexBuffer(const U32* data, size_t size)
 	{
 		glGenBuffers(1, &m_id);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_id);

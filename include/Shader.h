@@ -1,8 +1,9 @@
 #pragma once
 
-#include <glad/glad.h>
-
+#include "Core.h"
 #include <string>
+
+#include <glad/glad.h>
 
 namespace engine
 {
@@ -22,8 +23,8 @@ namespace engine
 		// Uniform setters
 		void setBool(const std::string& name, bool value) const;
 		void setInt(const std::string& name, int value) const;
-		void setFloat(const std::string& name, float value) const;
-		void setMat4(const std::string& name, const float* value) const;
+		void setFloat(const std::string& name, F32 value) const;
+		void setMat4(const std::string& name, const F32* value) const;
 
 	private:
 		GLuint m_programID{ 0 };

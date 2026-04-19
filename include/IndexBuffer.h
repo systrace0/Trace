@@ -1,14 +1,15 @@
 #pragma once
 
+#include "Core.h"
+
 #include <glad/glad.h>
-#include <cstdint>
 
 namespace engine
 {
 	class IndexBuffer
 	{
 	public:
-		IndexBuffer(const uint32_t* data, size_t size);
+		IndexBuffer(const U32* data, size_t size);
 		~IndexBuffer();
 
 		IndexBuffer(const IndexBuffer&) = delete;

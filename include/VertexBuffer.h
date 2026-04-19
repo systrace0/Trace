@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Core.h"
+
 #include <glad/glad.h>
 
 namespace engine
@@ -7,7 +9,7 @@ namespace engine
 	class VertexBuffer
 	{
 	public:
-		VertexBuffer(const float* data, size_t size, GLenum usage = GL_STATIC_DRAW);
+		VertexBuffer(const F32* data, size_t size, GLenum usage = GL_STATIC_DRAW);
 		~VertexBuffer();
 
 		VertexBuffer(const VertexBuffer&) = delete;

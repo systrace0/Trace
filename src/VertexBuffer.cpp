@@ -2,7 +2,7 @@
 
 namespace engine
 {
-	VertexBuffer::VertexBuffer(const float* data, size_t size, GLenum usage)
+	VertexBuffer::VertexBuffer(const F32* data, size_t size, GLenum usage)
 	{
 		glGenBuffers(1, &m_id);
 		glBindBuffer(GL_ARRAY_BUFFER, m_id);
