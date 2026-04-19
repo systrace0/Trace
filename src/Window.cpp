@@ -18,7 +18,7 @@ namespace engine
 			throw std::runtime_error("Failed to initialize GLFW");
 
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 		// Debug context in debug builds - gives better GL error messages
@@ -28,7 +28,6 @@ namespace engine
 
 		m_window = glfwCreateWindow(width, height, title, nullptr, nullptr);
 
-		ASSERT(m_window != nullptr, "glfwCreateWindow returned null");
 		if (!m_window)
 		{
 			glfwTerminate();
@@ -44,6 +43,19 @@ namespace engine
 			glfwTerminate();
 			throw std::runtime_error("Failed to initialize GLAD");
 		}
+
+		// Setup GL debug output in debug builds after GL context is initialized
+#ifndef NDEBUG
+		// Enable debug output if available
+		glEnable(GL_DEBUG_OUTPUT);
+		glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+		glDebugMessageCallback([](GLenum source, GLenum type, GLuint id,
+			GLenum severity, GLsizei length, const GLchar* message, const void*)
+			{
+				if (severity == GL_DEBUG_SEVERITY_NOTIFICATION) return;
+				std::printf("[GL Debug] %s\n", message);
+			}, nullptr);
+#endif
 
 		std::printf("[Window] Created %dx%d | OpenGL %s\n", width, height,
 			(const char*)glGetString(GL_VERSION));

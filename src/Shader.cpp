@@ -8,7 +8,7 @@
 // Invisible outside of Shader.cpp & caller doesn't need to know about it
 namespace
 {
-	GLuint compileShader(GLenum type, const std::string& source)
+	GLuint compileShader(GLenum type, const std::string& source, const std::string& name)
 	{
 		// OpenGL is a C API — can't pass std::string directly
 		// c_str() gives us a null-terminated const char* it understands
@@ -26,12 +26,12 @@ namespace
 		if (shader_compiled != GL_TRUE)
 		{
 			GLsizei log_length = 0;
-			GLchar message[1024];
-			glGetShaderInfoLog(shader, 1024, &log_length, message);
-			glDeleteShader(
-				shader); // Delete shader so the object doesn't leak on the GPU
-			throw std::runtime_error(std::string("Shader compilation failed:\n") +
-				message);
+			std::string message;
+			message.resize(1024);
+			glGetShaderInfoLog(shader, static_cast<GLsizei>(message.size()), &log_length, &message[0]);
+			message.resize(log_length > 0 ? static_cast<size_t>(log_length) : 0);
+			glDeleteShader(shader); // Delete shader so the object doesn't leak on the GPU
+			throw std::runtime_error(std::string("Shader compilation failed (") + name + "):\n" + message);
 		}
 
 		return shader;
@@ -78,8 +78,9 @@ namespace engine
 				e.what());
 		}
 
-		GLuint vertex = ::compileShader(GL_VERTEX_SHADER, vertexCode);
-		GLuint fragment = ::compileShader(GL_FRAGMENT_SHADER, fragmentCode);
+		// Provide the shader file paths as names so error messages are informative
+		GLuint vertex = ::compileShader(GL_VERTEX_SHADER, vertexCode, vertexPath);
+		GLuint fragment = ::compileShader(GL_FRAGMENT_SHADER, fragmentCode, fragmentPath);
 
 		m_programID = glCreateProgram();
 

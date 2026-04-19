@@ -39,6 +39,13 @@ target_include_directories(glad PUBLIC
 # ── Engine sources ─────────────────────────────────────────────────────────
 add_executable(${PROJECT_NAME})
 
+# Copy shaders folder next to the built executable after build
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    ${CMAKE_SOURCE_DIR}/shaders
+    $<TARGET_FILE_DIR:${PROJECT_NAME}>/shaders
+)
+
 # ── Compiler warnings ─────────────────────────────────────────────────────────
 # This is not optional. Warnings are your first line of defense.
 # A senior engineer with zero warnings is more productive than one with 200 suppressed ones.
