@@ -39,6 +39,11 @@ int main()
 	glEnableVertexAttribArray(1);																// Enable slot 1
 
 	vao.unbind(); // End "Recording" - Saves recipe
+
+	ASSERT(vao.id() != 0, "VAO invalid before draw");
+	ASSERT(vertexBuffer.id() != 0, "VBO invalid before draw");
+	ASSERT(indexBuffer.id() != 0, "EBO invalid before draw");
+
 	while (!window.shouldClose())
 	{
 		glClearColor(0.1f, 0.1f, 0.15f, 1.0f);

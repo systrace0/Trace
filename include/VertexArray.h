@@ -19,6 +19,8 @@ namespace engine
 		void bind() const;
 		void unbind() const;
 
+		[[nodiscard]] GLuint id() const { return m_id; }
+
 	private:
 		GLuint m_id{ 0 };
 	};
