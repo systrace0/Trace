@@ -1,4 +1,5 @@
 #include "Shader.h"
+#include "Logger.h"
 
 #include <fstream>
 #include <iostream>
@@ -104,12 +105,18 @@ namespace engine
 
 		glDeleteShader(vertex);
 		glDeleteShader(fragment);
+
+		ASSERT(m_programID != 0, "Failed to create shader program");
+		Logger::info("[Shader] Program {} created (vert='{}', frag='{}')", m_programID, vertexPath, fragmentPath);
 	}
 
 	Shader::~Shader()
 	{
-		if (m_programID)
+        if (m_programID)
+		{
+			Logger::info("[Shader] Deleting program {}", m_programID);
 			glDeleteProgram(m_programID);
+		}
 	}
 
 	Shader::Shader(Shader&& other) noexcept

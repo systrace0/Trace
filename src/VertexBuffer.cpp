@@ -1,10 +1,14 @@
 #include "VertexBuffer.h"
+#include "Core.h"
+#include "Logger.h"
 
 namespace engine
 {
 	VertexBuffer::VertexBuffer(const F32* data, size_t size, GLenum usage)
 	{
-		glGenBuffers(1, &m_id);
+     glGenBuffers(1, &m_id);
+		ASSERT(m_id != 0, "Failed to generate VBO");
+		Logger::info("[VBO] Created id={}", m_id);
 		glBindBuffer(GL_ARRAY_BUFFER, m_id);
 		glBufferData(GL_ARRAY_BUFFER, size, data, usage);
 	}
@@ -36,6 +40,7 @@ namespace engine
 
 	void VertexBuffer::bind() const
 	{
+        ASSERT(m_id != 0, "Calling bind() on uninitialized VBO");
 		glBindBuffer(GL_ARRAY_BUFFER, m_id);
 	}
 
