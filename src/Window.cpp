@@ -4,6 +4,7 @@
 #include <stdexcept>
 
 #include "Core.h"
+#include "Logger.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -41,7 +42,8 @@ namespace engine
 		{
 			glfwDestroyWindow(m_window);
 			glfwTerminate();
-			throw std::runtime_error("Failed to initialize GLAD");
+			// throw std::runtime_error("Failed to initialize GLAD");
+			Logger::fatal("Failed to initialize GLAD");
 		}
 
 		// Setup GL debug output in debug builds after GL context is initialized
@@ -53,12 +55,15 @@ namespace engine
 			GLenum severity, GLsizei length, const GLchar* message, const void*)
 			{
 				if (severity == GL_DEBUG_SEVERITY_NOTIFICATION) return;
-				std::printf("[GL Debug] %s\n", message);
+
+				if (severity == GL_DEBUG_SEVERITY_HIGH)
+					Logger::error("[GL Debug] {}", message);
+				else
+					Logger::warn("[GL Debug] {}", message);
 			}, nullptr);
 #endif
 
-		std::printf("[Window] Created %dx%d | OpenGL %s\n", width, height,
-			(const char*)glGetString(GL_VERSION));
+		Logger::info("[Window] Created {}x{} | OpenGl {}", width, height, (const char*)glGetString(GL_VERSION));
 	}
 
 	Window::~Window()

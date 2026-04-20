@@ -9,6 +9,16 @@
 
 namespace
 {
+	// ANSI escape codes for terminal colors
+	constexpr std::string_view COLOR_RESET = "\033[0m";
+	constexpr std::string_view COLOR_RED = "\033[31m";
+	constexpr std::string_view COLOR_GREEN = "\033[32m";
+	constexpr std::string_view COLOR_YELLOW = "\033[33m";
+	constexpr std::string_view COLOR_BLUE = "\033[34m";
+	constexpr std::string_view COLOR_MAGENTA = "\033[35m";
+	constexpr std::string_view COLOR_CYAN = "\033[36m";
+	constexpr std::string_view COLOR_WHITE = "\033[37m";
+
 	// Helper function to get the current time formatted as a string
 	static std::string get_timestamp()
 	{
@@ -19,12 +29,6 @@ namespace
 
 namespace engine
 {
-	// ANSI escape codes for terminal colors
-	constexpr std::string_view COLOR_RESET = "\033[0m";
-	constexpr std::string_view COLOR_GREEN = "\033[32m";
-	constexpr std::string_view COLOR_YELLOW = "\033[33m";
-	constexpr std::string_view COLOR_RED = "\033[31m";
-
 	void Logger::init()
 	{
 #ifdef _WIN32
@@ -44,7 +48,7 @@ namespace engine
 
 	void Logger::print_info(std::string_view message)
 	{
-		std::cout << COLOR_GREEN << "[" << get_timestamp() << "] [INFO]: " << message << COLOR_RESET << '\n';
+		std::cout << COLOR_WHITE << "[" << get_timestamp() << "] [INFO]: " << message << COLOR_RESET << '\n';
 	}
 
 	void Logger::print_warn(std::string_view message)
@@ -55,5 +59,18 @@ namespace engine
 	void Logger::print_error(std::string_view message)
 	{
 		std::cerr << COLOR_RED << "[" << get_timestamp() << "] [ERROR]: " << message << COLOR_RESET << '\n';
+	}
+
+	void Logger::print_fatal(std::string_view message)
+	{
+		std::cerr << COLOR_MAGENTA << "[" << get_timestamp() << "] [FATAL]: "
+			<< message << COLOR_RESET << '\n';
+		std::abort();
+	}
+
+	// Not sure if that makes sense... - i'll keep this one for maybe any reason there could be
+	void Logger::print_success(std::string_view message)
+	{
+		std::cout << COLOR_GREEN << "[" << get_timestamp() << "] [SUCCESS]: " << message << COLOR_RESET << '\n';
 	}
 }

@@ -15,7 +15,7 @@ using namespace engine;
 
 int main()
 {
-	engine::Logger::init();
+	Logger::init();
 
 	F32 vertices[] = {
 		//   position            color
@@ -29,18 +29,18 @@ int main()
 	};
 
 	// Window owns everything
-	engine::Window window{ 1280, 720, "Engine" };
+	Window window{ 1280, 720, "Engine" };
 
-	engine::Logger::info("Engine initialized successfully.");
-	engine::Logger::warn("Memory usage approaching limit: {} MB", 512);
-	engine::Logger::error("Failed to load texture: {}", "player.png");
+	Logger::info("Engine initialized successfully.");
+	Logger::warn("Memory usage approaching limit: {} MB", 512);
+	Logger::error("Failed to load texture: {}", "player.png");
 
-	engine::VertexArray vao; // Start "Recording"
+	VertexArray vao; // Start "Recording"
 	vao.bind();
 
-	engine::Shader shader("shaders/basic.vert", "shaders/basic.frag");
-	engine::VertexBuffer vertexBuffer(vertices, sizeof(vertices));
-	engine::IndexBuffer indexBuffer(indices, sizeof(indices));
+	Shader shader("shaders/basic.vert", "shaders/basic.frag");
+	VertexBuffer vertexBuffer(vertices, sizeof(vertices));
+	IndexBuffer indexBuffer(indices, sizeof(indices));
 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(F32), (void*)0);					// Position
 	glEnableVertexAttribArray(0);																// Enable slot 0

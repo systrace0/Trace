@@ -13,6 +13,8 @@ namespace engine
 		static void print_info(std::string_view message);
 		static void print_warn(std::string_view message);
 		static void print_error(std::string_view message);
+		static void print_fatal(std::string_view message);
+		static void print_success(std::string_view message);
 
 	public:
 		static void init();
@@ -33,6 +35,18 @@ namespace engine
 		static void error(std::format_string<Args...> fmt, Args&&... args)
 		{
 			print_error(std::format(fmt, std::forward<Args>(args)...));
+		}
+
+		template <typename... Args>
+		static void fatal(std::format_string<Args...> fmt, Args&&... args)
+		{
+			print_fatal(std::format(fmt, std::forward<Args>(args)...));
+		}
+
+		template <typename... Args>
+		static void success(std::format_string<Args...> fmt, Args&&... args)
+		{
+			print_success(std::format(fmt, std::forward<Args>(args)...));
 		}
 	};
 }
