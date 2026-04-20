@@ -13,6 +13,8 @@ namespace engine
 		static void print_error(std::string_view message);
 
 	public:
+		static void init();
+
 		template<typename... Args>
 		static void info(std::format_string<Args...> fmt, Args&&... args)
 		{

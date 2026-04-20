@@ -1,6 +1,9 @@
 #include "Window.h"
 #include "Core.h"
+#include "Logger.h"
+
 #include "Shader.h"
+
 #include "VertexArray.h"
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
@@ -12,6 +15,8 @@ using namespace engine;
 
 int main()
 {
+	engine::Logger::init();
+
 	F32 vertices[] = {
 		//   position            color
 			 0.0f,  0.5f, 0.0f,  1.0f, 0.0f, 0.0f,  // top
@@ -25,6 +30,10 @@ int main()
 
 	// Window owns everything
 	engine::Window window{ 1280, 720, "Engine" };
+
+	engine::Logger::info("Engine initialized successfully.");
+	engine::Logger::warn("Memory usage approaching limit: {} MB", 512);
+	engine::Logger::error("Failed to load texture: {}", "player.png");
 
 	engine::VertexArray vao; // Start "Recording"
 	vao.bind();
