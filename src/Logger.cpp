@@ -42,7 +42,6 @@ namespace engine
 #endif
 	}
 
-
 	void Logger::print_info(std::string_view message)
 	{
 		std::cout << COLOR_GREEN << "[" << get_timestamp() << "] [INFO]: " << message << COLOR_RESET << '\n';

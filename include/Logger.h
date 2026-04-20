@@ -5,6 +5,8 @@
 
 namespace engine
 {
+	// Stateless now — class kept intentionally for future state
+	// (log file handle, level filtering, output redirection)
 	class Logger
 	{
 	private:

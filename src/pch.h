@@ -8,3 +8,6 @@
 #include <string>
 #include <cstdint>
 #include <cstdio>
+
+// Custom header
+#include "Logger.h"
