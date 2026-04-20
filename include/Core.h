@@ -3,7 +3,14 @@
 
 #include "Logger.h"
 
-// In a central header like Core.h
+#ifdef _MSC_VER
+#define DEBUG_BREAK() __debugbreak()
+#elif defined(__clang__) || defined(__GNUC__)
+#define DEBUG_BREAK() __builtin_trap()
+#else
+#define DEBUG_BREAK() std::abort()
+#endif
+
 #ifdef NDEBUG
 #define ASSERT(x, msg)
 #else
@@ -11,7 +18,7 @@
     if (!(x))                                                                                      \
     {                                                                                              \
 		engine::Logger::error("ASSERT FAILED: {}\nFile: {}\nLine: {}\n", msg, __FILE__, __LINE__); \
-        __debugbreak();                                                                            \
+        DEBUG_BREAK();                                                                             \
     }
 #endif
 
