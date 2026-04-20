@@ -5,7 +5,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 	VertexArray.cpp
 	VertexBuffer.cpp
 	IndexBuffer.cpp
-)
+	Logger.cpp)
 
 target_precompile_headers(${PROJECT_NAME} PRIVATE pch.h)
 
