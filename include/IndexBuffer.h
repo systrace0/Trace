@@ -9,7 +9,7 @@ namespace engine
 	class IndexBuffer
 	{
 	public:
-		IndexBuffer(const U32* data, size_t size);
+		IndexBuffer(const U32* data, U32 count);
 		~IndexBuffer();
 
 		IndexBuffer(const IndexBuffer&) = delete;

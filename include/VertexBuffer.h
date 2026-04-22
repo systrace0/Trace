@@ -9,7 +9,7 @@ namespace engine
 	class VertexBuffer
 	{
 	public:
-		VertexBuffer(const F32* data, size_t size, GLenum usage = GL_STATIC_DRAW);
+		VertexBuffer(const F32* data, size_t sizeInBytes, GLenum usage = GL_STATIC_DRAW);
 		~VertexBuffer();
 
 		VertexBuffer(const VertexBuffer&) = delete;

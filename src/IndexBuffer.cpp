@@ -4,13 +4,13 @@
 
 namespace engine
 {
-	IndexBuffer::IndexBuffer(const U32* data, size_t size)
+	IndexBuffer::IndexBuffer(const U32* data, U32 count)
 	{
-     glGenBuffers(1, &m_id);
+		glGenBuffers(1, &m_id);
 		ASSERT(m_id != 0, "Failed to generate EBO");
 		Logger::info("[EBO] Created id={}", m_id);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_id);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(U32), data, GL_STATIC_DRAW);
 	}
 
 	IndexBuffer::~IndexBuffer()
@@ -41,7 +41,7 @@ namespace engine
 
 	void IndexBuffer::bind() const
 	{
-        ASSERT(m_id != 0, "Calling bind() on uninitialized EBO");
+		ASSERT(m_id != 0, "Calling bind() on uninitialized EBO");
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_id);
 	}
 
