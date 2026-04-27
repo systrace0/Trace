@@ -33,7 +33,6 @@ int main()
 	Logger::info("Engine initialized successfully.");
 
 	ImGuiManager gui{ window };
-	Logger::info("ImGui initialized!");
 
 	Shader shader("shaders/basic.vert", "shaders/basic.frag");
 
