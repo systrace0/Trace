@@ -2,6 +2,7 @@
 
 #include "Panel.h"
 #include "Window.h"
+#include "imgui.h"
 
 #include <vector>
 #include <memory>
