@@ -5,6 +5,8 @@
 #include "Shader.h"
 #include "Mesh.h"
 
+#include "imgui/ImGuiManager.h"
+
 #include "glad/glad.h"
 
 using namespace engine;
@@ -13,6 +15,7 @@ int main()
 {
 	Logger::init();
 
+	// TODO: Use struct with positions and color and supply a vector with it - much cleaner
 	F32 vertices[] = {
 		//   position            color
 			 0.0f,  0.5f, 0.0f,  1.0f, 0.0f, 0.0f,  // top
@@ -29,6 +32,9 @@ int main()
 
 	Logger::info("Engine initialized successfully.");
 
+	ImGuiManager gui{ window };
+	Logger::info("ImGui initialized!");
+
 	Shader shader("shaders/basic.vert", "shaders/basic.frag");
 
 	Mesh mesh(vertices, sizeof(vertices), indices, std::size(indices));
@@ -40,6 +46,10 @@ int main()
 
 		shader.use();
 		mesh.draw();
+
+		gui.beginFrame();
+		// Panels
+		gui.endFrame();
 
 		window.swapBuffers();
 		window.pollEvents();
