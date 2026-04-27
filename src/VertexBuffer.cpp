@@ -8,7 +8,6 @@ namespace engine
 	{
 		glGenBuffers(1, &m_id);
 		ASSERT(m_id != 0, "Failed to generate VBO");
-		Logger::info("[VBO] Created id={}", m_id);
 		glBindBuffer(GL_ARRAY_BUFFER, m_id);
 		glBufferData(GL_ARRAY_BUFFER, sizeInBytes, data, usage);
 	}

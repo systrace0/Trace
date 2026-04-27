@@ -8,7 +8,6 @@ namespace engine
 	{
 		glGenBuffers(1, &m_id);
 		ASSERT(m_id != 0, "Failed to generate EBO");
-		Logger::info("[EBO] Created id={}", m_id);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_id);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(U32), data, GL_STATIC_DRAW);
 	}

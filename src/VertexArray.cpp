@@ -6,9 +6,8 @@ namespace engine
 {
 	VertexArray::VertexArray()
 	{
-        glGenVertexArrays(1, &m_id);
+		glGenVertexArrays(1, &m_id);
 		ASSERT(m_id != 0, "Failed to generate VAO");
-		Logger::info("[VAO] Created id={}", m_id);
 	}
 
 	VertexArray::~VertexArray()
@@ -38,7 +37,7 @@ namespace engine
 
 	void VertexArray::bind() const
 	{
-        ASSERT(m_id != 0, "Calling bind() on uninitialized VAO");
+		ASSERT(m_id != 0, "Calling bind() on uninitialized VAO");
 		glBindVertexArray(m_id);
 	}
 
