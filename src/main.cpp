@@ -6,6 +6,7 @@
 #include "Mesh.h"
 
 #include "imgui/ImGuiManager.h"
+#include "imgui/panels/DebugPanel.h"
 
 #include "glad/glad.h"
 
@@ -34,8 +35,9 @@ int main()
 
 	ImGuiManager gui{ window };
 
-	Shader shader("shaders/basic.vert", "shaders/basic.frag");
+	gui.addPanel(std::make_unique<DebugPanel>());
 
+	Shader shader("shaders/basic.vert", "shaders/basic.frag");
 	Mesh mesh(vertices, sizeof(vertices), indices, std::size(indices));
 
 	while (!window.shouldClose())
