@@ -7,6 +7,9 @@ target_sources(${PROJECT_NAME} PRIVATE
 	IndexBuffer.cpp
 	Logger.cpp
 	Mesh.cpp
+	imgui/ImGuiManager.cpp
+	imgui/panels/LogPanel.cpp
+	imgui/panels/DebugPanel.cpp
 )
 
 target_precompile_headers(${PROJECT_NAME} PRIVATE pch.h)
