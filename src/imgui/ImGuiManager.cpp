@@ -1,5 +1,7 @@
 #include "ImGuiManager.h"
 
+#include "Core.h"
+
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
@@ -15,8 +17,13 @@ namespace engine
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
 		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
-		ImGui_ImplGlfw_InitForOpenGL(window.handle(), true);
-		ImGui_ImplOpenGL3_Init();
+		bool glfwResult = ImGui_ImplGlfw_InitForOpenGL(window.handle(), true);
+		ASSERT(glfwResult, "ImGui GLFW backend failed to initialize");
+
+		bool openglResult = ImGui_ImplOpenGL3_Init();
+		ASSERT(openglResult, "ImGui OpenGL3 backend failed to initialize");
+
+		Logger::info("[ImGuiManager] Initialized");
 	}
 
 	ImGuiManager::~ImGuiManager()
@@ -31,7 +38,14 @@ namespace engine
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
-		ImGui::DockSpaceOverViewport();
+
+		// Transparent fullscreen dockspace - doesn't cover the scene
+		ImGuiWindowFlags dockFlags =
+			ImGuiWindowFlags_NoBackground |
+			ImGuiWindowFlags_NoBringToFrontOnFocus;
+
+		// PassthruCentralNode - makes the central empty area transparent - 3D scene shwos through
+		ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
 	}
 
 	void ImGuiManager::endFrame()
