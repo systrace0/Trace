@@ -1,1 +1,26 @@
 #pragma once
+
+#include "Panel.h"
+#include "Window.h"
+
+#include <vector>
+#include <memory>
+
+namespace engine
+{
+	class ImGuiManager
+	{
+	public:
+		ImGuiManager(Window& window);
+		~ImGuiManager();
+
+		void beginFrame();
+		void endFrame();
+
+		// TODO: Look up unique_ptr on cppreference
+		void addPanel(std::unique_ptr<Panel> panel);
+
+	private:
+		std::vector<std::unique_ptr<Panel>> m_panels;
+	};
+}
