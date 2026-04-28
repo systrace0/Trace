@@ -4,7 +4,7 @@
 
 namespace engine
 {
-	enum class LogLevel { Info, Warn, Error, Fatal, Success, Count };
+	enum class LogLevel { Debug, Info, Warn, Error, Fatal, Success, Count };
 
 	struct LogEntry
 	{

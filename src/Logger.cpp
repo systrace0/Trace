@@ -20,6 +20,7 @@ namespace
 	constexpr std::string_view COLOR_MAGENTA = "\033[35m";
 	constexpr std::string_view COLOR_CYAN = "\033[36m";
 	constexpr std::string_view COLOR_WHITE = "\033[37m";
+	constexpr std::string_view COLOR_GREY = "\033[90m";
 
 	// Helper function to get the current time formatted as a string
 	static std::string get_timestamp()
@@ -46,6 +47,13 @@ namespace engine
 		dwMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
 		SetConsoleMode(hOut, dwMode);
 #endif
+	}
+
+	void Logger::print_debug(std::string_view message)
+	{
+		std::cout << COLOR_GREY << "[" << get_timestamp() << "] [DEBUG]: " << message << COLOR_RESET << '\n';
+
+		LogPanel::push({ std::string(message), get_timestamp(), LogLevel::Debug });
 	}
 
 	void Logger::print_info(std::string_view message)

@@ -10,6 +10,7 @@ namespace engine
 	class Logger
 	{
 	private:
+		static void print_debug(std::string_view message);
 		static void print_info(std::string_view message);
 		static void print_warn(std::string_view message);
 		static void print_error(std::string_view message);
@@ -18,6 +19,12 @@ namespace engine
 
 	public:
 		static void init();
+
+		template<typename... Args>
+		static void info(std::format_string<Args...> fmt, Args&&... args)
+		{
+			print_debug(std::format(fmt, std::forward<Args>(args)...));
+		}
 
 		template<typename... Args>
 		static void info(std::format_string<Args...> fmt, Args&&... args)
