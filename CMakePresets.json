@@ -25,6 +25,14 @@
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release"
       }
+    },
+    {
+      "name": "debug-asan",
+      "displayName": "Debug + ASan",
+      "inherits": "debug",
+      "cacheVariables": {
+        "ENABLE_ASAN": "ON"
+      }
     }
   ],
   "buildPresets": [
@@ -35,6 +43,10 @@
     {
       "name": "release",
       "configurePreset": "release"
+    },
+    {
+      "name": "debug-asan",
+      "configurePreset": "debug-asan"
     }
   ]
 }
