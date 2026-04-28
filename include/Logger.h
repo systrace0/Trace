@@ -21,7 +21,7 @@ namespace engine
 		static void init();
 
 		template<typename... Args>
-		static void info(std::format_string<Args...> fmt, Args&&... args)
+		static void debug(std::format_string<Args...> fmt, Args&&... args)
 		{
 			print_debug(std::format(fmt, std::forward<Args>(args)...));
 		}
