@@ -32,9 +32,9 @@ namespace engine
 
 			// Skip if search doesn't match (case sensitive for now)
 			if (m_searchBuffer[0] != '\0' && entry.message.find(m_searchBuffer) == std::string::npos)
-				continue
+				continue;
 
-				ImGui::Text("%s", entry.message.c_str());
+			ImGui::Text("%s", entry.message.c_str());
 		}
 
 		// Auto scroll to bottom
