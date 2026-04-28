@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace engine
+namespace trace
 {
 	enum class LogLevel { Debug, Info, Warn, Error, Fatal, Success, Count };
 

@@ -2,7 +2,7 @@
 
 #include <imgui.h>
 
-namespace engine
+namespace trace
 {
 	DebugPanel::DebugPanel()
 		: m_glVersion((const char*)glGetString(GL_VERSION))

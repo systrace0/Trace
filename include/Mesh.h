@@ -4,7 +4,7 @@
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
 
-namespace engine
+namespace trace
 {
 	class Mesh
 	{

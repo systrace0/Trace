@@ -7,7 +7,7 @@
 #include <vector>
 #include <memory>
 
-namespace engine
+namespace trace
 {
 	class ImGuiManager
 	{

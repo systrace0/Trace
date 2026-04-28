@@ -30,7 +30,7 @@ namespace
 	}
 }
 
-namespace engine
+namespace trace
 {
 	void Logger::init()
 	{

@@ -3,7 +3,7 @@
 #include <format>
 #include <string_view>
 
-namespace engine
+namespace trace
 {
 	// Stateless now — class kept intentionally for future state
 	// (log file handle, level filtering, output redirection)

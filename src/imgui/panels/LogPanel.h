@@ -5,7 +5,7 @@
 
 #include <vector>
 
-namespace engine
+namespace trace
 {
 	class LogPanel : public Panel
 	{

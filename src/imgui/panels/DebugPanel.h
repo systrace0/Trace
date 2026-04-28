@@ -5,7 +5,7 @@
 #include <chrono>
 #include <array>
 
-namespace engine
+namespace trace
 {
 	class DebugPanel : public Panel
 	{

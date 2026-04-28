@@ -2,7 +2,7 @@
 #include "Core.h"
 #include "Logger.h"
 
-namespace engine
+namespace trace
 {
 	VertexBuffer::VertexBuffer(const F32* data, size_t sizeInBytes, GLenum usage)
 	{

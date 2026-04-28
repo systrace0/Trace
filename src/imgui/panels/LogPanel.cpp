@@ -3,9 +3,9 @@
 #include <imgui.h>
 
 // -- Sanity checks --------------------------------------------------------------------------------
-static_assert((int)engine::LogLevel::Count == 6, "Update LogPanel filter array");
+static_assert((int)trace::LogLevel::Count == 6, "Update LogPanel filter array");
 
-namespace engine
+namespace trace
 {
 
 	std::vector<LogEntry> LogPanel::s_entries;

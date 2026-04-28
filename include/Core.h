@@ -17,13 +17,13 @@
 #define ASSERT(x, msg)                                                                             \
     if (!(x))                                                                                      \
     {                                                                                              \
-		engine::Logger::error("ASSERT FAILED: {}\nFile: {}\nLine: {}\n", msg, __FILE__, __LINE__); \
+		trace::Logger::error("ASSERT FAILED: {}\nFile: {}\nLine: {}\n", msg, __FILE__, __LINE__); \
         DEBUG_BREAK();                                                                             \
     }
 #endif
 
 // -- Types ----------------------------------------------------------------------------------------
-namespace engine
+namespace trace
 {
 	using U8 = uint8_t;
 	using U16 = uint16_t;
