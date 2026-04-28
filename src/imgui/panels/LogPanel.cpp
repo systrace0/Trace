@@ -22,23 +22,33 @@ namespace engine
 	{
 		ImGui::Begin("Log", nullptr, ImGuiWindowFlags_NoCollapse);
 
-		const ImVec4 levelColors[] = {
-			{ 0.5f, 0.5f, 0.5f, 1.0f },  // Debug   — grey
-			{ 0.4f, 0.6f, 1.0f, 1.0f },  // Info    — baby blue
-			{ 0.8f, 0.6f, 0.0f, 1.0f },  // Warn    — darker yellow
-			{ 0.9f, 0.2f, 0.2f, 1.0f },  // Error   — red
-			{ 0.7f, 0.3f, 0.9f, 1.0f },  // Fatal   — purple
-			{ 0.0f, 0.7f, 0.3f, 1.0f },  // Success — darker green
+		// -- Colors -------------------------------------------------------------------------
+		const ImVec4 buttonColors[] = {
+			{ 0.4f, 0.4f, 0.4f, 1.0f },  // Debug   — grey button
+			{ 0.2f, 0.4f, 0.8f, 1.0f },  // Info    — blue button
+			{ 0.7f, 0.5f, 0.0f, 1.0f },  // Warn    — dark yellow button
+			{ 0.8f, 0.1f, 0.1f, 1.0f },  // Error   — red button
+			{ 0.6f, 0.2f, 0.8f, 1.0f },  // Fatal   — purple button
+			{ 0.0f, 0.6f, 0.2f, 1.0f },  // Success — dark green button
 		};
 
-		const char* levelLabels[] = { "DBG", "INF", "WRN", "ERR", "FTL", "SUC" };
+		const ImVec4 textColors[] = {
+			{ 0.6f, 0.6f, 0.6f, 1.0f },  // Debug   — grey text
+			{ 1.0f, 1.0f, 1.0f, 1.0f },  // Info    — white text
+			{ 1.0f, 0.8f, 0.0f, 1.0f },  // Warn    — yellow text
+			{ 1.0f, 0.3f, 0.3f, 1.0f },  // Error   — red text
+			{ 0.8f, 0.4f, 1.0f, 1.0f },  // Fatal   — light purple text
+			{ 0.0f, 0.9f, 0.4f, 1.0f },  // Success — green text
+		};
 
-		// Filter Buttons
+		const char* levelLabels[] = { "DEBUG", "INFO", "WARN", "ERROR", "FATAL", "SUCCESS" };
+
+		// -- Filter Buttons -----------------------------------------------------------------
+		ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 3.0f);
 		for (int i = 0; i < (int)LogLevel::Count; ++i)
 		{
-			ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 3.0f);
 			ImVec4 color = m_levelFilter[i]
-				? levelColors[i]
+				? buttonColors[i]
 				: ImVec4(0.4f, 0.4f, 0.4f, 1.0f);
 
 			ImGui::PushStyleColor(ImGuiCol_Button, color);
@@ -52,23 +62,20 @@ namespace engine
 
 			if (i < (int)LogLevel::Count - 1)
 				ImGui::SameLine();
-			ImGui::PopStyleVar();
 		}
+		ImGui::PopStyleVar();
 
 		float availableWidth = ImGui::GetContentRegionAvail().x
 			- ImGui::CalcTextSize("Auto-Scroll").x
 			- ImGui::CalcTextSize("Clear").x
 			- 80.0f;
-		ImGui::SetNextItemWidth(availableWidth);
+
+		ImGui::SameLine();
+		ImGui::SetNextItemWidth(150.0f);  // fixed width, adjust to taste
 		ImGui::InputText("##search", m_searchBuffer, sizeof(m_searchBuffer));
-
 		ImGui::SameLine();
-		ImGui::InputText("Filter", m_searchBuffer, sizeof(m_searchBuffer));
-		ImGui::SameLine();
-
 		ImGui::Checkbox("Auto-Scroll", &m_autoScroll);
 		ImGui::SameLine();
-
 		if (ImGui::Button("Clear")) s_entries.clear();
 
 		ImGui::Separator();
@@ -88,7 +95,7 @@ namespace engine
 
 			ImGui::TextDisabled("[%s]", entry.timestamp.c_str());
 			ImGui::SameLine();
-			ImGui::PushStyleColor(ImGuiCol_Text, levelColors[(int)entry.level]);
+			ImGui::PushStyleColor(ImGuiCol_Text, textColors[(int)entry.level]);
 			ImGui::Text("[%s]", levelLabels[(int)entry.level]);
 			ImGui::SameLine();
 			ImGui::TextWrapped("%s", entry.message.c_str());
