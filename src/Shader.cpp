@@ -39,7 +39,7 @@ namespace
 	}
 } // namespace
 
-namespace engine
+namespace trace
 {
 	Shader::Shader(const char* vertexPath, const char* fragmentPath)
 	{
@@ -163,4 +163,4 @@ namespace engine
 		glUniformMatrix4fv(glGetUniformLocation(m_programID, name.c_str()), 1, GL_FALSE, value);
 	}
 
-} // namespace engine
+} // namespace trace

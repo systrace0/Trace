@@ -9,7 +9,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-namespace engine
+namespace trace
 {
 	Window::Window(int width, int height, const char* title) : m_width(width), m_height(height)
 	{
@@ -119,4 +119,4 @@ namespace engine
 		ASSERT(m_window, "Window handle is null in pollEvents()");
 		glfwPollEvents();
 	}
-} // namespace engine
+} // namespace trace

@@ -4,7 +4,7 @@
 // Only Window.cpp needs the full GLFW header
 struct GLFWwindow;
 
-namespace engine
+namespace trace
 {
 	class Window
 	{

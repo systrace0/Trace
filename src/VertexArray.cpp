@@ -2,7 +2,7 @@
 #include "Core.h"
 #include "Logger.h"
 
-namespace engine
+namespace trace
 {
 	VertexArray::VertexArray()
 	{

@@ -11,7 +11,7 @@
 
 #include "glad/glad.h"
 
-using namespace engine;
+using namespace trace;
 
 int main()
 {
@@ -30,7 +30,7 @@ int main()
 	};
 
 	// Window owns everything
-	Window window{ 1280, 720, "Engine" };
+	Window window{ 1280, 720, "TRACE Engine" };
 
 	Logger::info("Engine initialized successfully.");
 

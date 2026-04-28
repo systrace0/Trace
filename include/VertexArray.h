@@ -2,7 +2,7 @@
 
 #include <glad/glad.h>
 
-namespace engine
+namespace trace
 {
 	class VertexArray
 	{

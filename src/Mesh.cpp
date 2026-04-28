@@ -1,6 +1,6 @@
 #include "Mesh.h"
 
-namespace engine
+namespace trace
 {
 	Mesh::Mesh(const F32* vertices, U32 vertexSize, const U32* indices, U32 indexCount)
 		// By the time it reaches the body - vbo and ebo data is on the GPU via their constructors
