@@ -47,9 +47,10 @@ namespace engine
 		ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 3.0f);
 		for (int i = 0; i < (int)LogLevel::Count; ++i)
 		{
+			// Inactive buttons
 			ImVec4 color = m_levelFilter[i]
 				? buttonColors[i]
-				: ImVec4(0.4f, 0.4f, 0.4f, 1.0f);
+				: ImVec4(0.2f, 0.2f, 0.2f, 1.0f);
 
 			ImGui::PushStyleColor(ImGuiCol_Button, color);
 			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, color);
@@ -64,11 +65,6 @@ namespace engine
 				ImGui::SameLine();
 		}
 		ImGui::PopStyleVar();
-
-		float availableWidth = ImGui::GetContentRegionAvail().x
-			- ImGui::CalcTextSize("Auto-Scroll").x
-			- ImGui::CalcTextSize("Clear").x
-			- 80.0f;
 
 		ImGui::SameLine();
 		ImGui::SetNextItemWidth(150.0f);  // fixed width, adjust to taste
