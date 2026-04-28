@@ -16,10 +16,32 @@ namespace engine
 		ImGui::Begin("Log");
 
 		const char* labels[] = { "Info", "Warn", "Error", "Fatal", "Success" };
-		for (for i = 0; i < (int)LogLevel::Count; ++i)
+		for (int i = 0; i < (int)LogLevel::Count; ++i)
 			ImGui::Checkbox(labels[i], &m_levelFilter[i]);
 
 		ImGui::InputText("Logs", m_searchBuffer, sizeof(m_searchBuffer));
+
+		// Creates a scrollable box, height = 0 fill remaining window space
+		ImGui::BeginChild("LogEntries", ImVec2(0, 0), false);
+
+		for (auto& entry : s_entries)
+		{
+			// Skip if levels is filtered out
+			if (!m_levelFilter[(int)entry.level])
+				continue;
+
+			// Skip if search doesn't match (case sensitive for now)
+			if (m_searchBuffer[0] != '\0' && entry.message.find(m_searchBuffer) == std::string::npos)
+				continue
+
+				ImGui::Text("%s", entry.message.c_str());
+		}
+
+		// Auto scroll to bottom
+		if (ImGui::GetScrollY() >= ImGui::GetScrollMaxY())
+			ImGui::SetScrollHereY(1.0f);
+
+		ImGui::EndChild();
 		ImGui::End();
 	}
 }
