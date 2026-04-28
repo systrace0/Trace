@@ -24,6 +24,16 @@ namespace engine
 		// Creates a scrollable box, height = 0 fill remaining window space
 		ImGui::BeginChild("LogEntries", ImVec2(0, 0), false);
 
+		const ImVec4 levelColors[] = {
+			{ 1.0f, 1.0f, 1.0f, 1.0f },
+			{ 1.0f, 1.0f, 0.0f, 1.0f },
+			{ 1.0f, 0.3f, 0.3f, 1.0f },
+			{ 1.0f, 0.0f, 1.0f, 1.0f },
+			{ 0.0f, 1.0f, 0.0f, 1.0f },
+		};
+
+		const char* levelLabels[] = { "INFO", "WARN", "ERROR", "FATAL", "SUCCESS" };
+
 		for (auto& entry : s_entries)
 		{
 			// Skip if levels is filtered out
@@ -34,7 +44,12 @@ namespace engine
 			if (m_searchBuffer[0] != '\0' && entry.message.find(m_searchBuffer) == std::string::npos)
 				continue;
 
-			ImGui::Text("%s", entry.message.c_str());
+			ImGui::PushStyleColor(ImGuiCol_Text, levelColors[(int)entry.level]);
+			ImGui::Text("[%s] [%s]: %s",
+				entry.timestamp.c_str(),
+				levelLabels[(int)entry.level],
+				entry.message.c_str());
+			ImGui::PopStyleColor();
 		}
 
 		// Auto scroll to bottom
