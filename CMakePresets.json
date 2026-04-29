@@ -35,6 +35,15 @@
       }
     }
   ],
+  "testPresets": [
+    {
+      "name": "debug",
+      "configurePreset": "debug",
+      "output": {
+        "verbosity": "verbose"
+      }
+    }
+  ],
   "buildPresets": [
     {
       "name": "debug",
