@@ -11,6 +11,8 @@ namespace trace
 	{
 	public:
 		static void push(const LogEntry& entry);
+		static void   clear() { s_entries.clear(); }
+		static size_t entryCount() { return s_entries.size(); }
 		void draw() override;
 
 	private:

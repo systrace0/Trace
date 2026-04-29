@@ -6,11 +6,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)  # Don't allow gcc/msvc extensions. Stay portable.
 option(ENABLE_ASAN "Enable AddressSanitizer (and UBSan on non-MSVC)" OFF)
 
+# ── Engine executable ──────────────────────────────────────────────────────────
+add_library(TraceLib STATIC)
+add_executable(${PROJECT_NAME})
+
 include(cmake/Dependencies.cmake)
 include(cmake/Targets.cmake)
-
-# ── Engine executable ──────────────────────────────────────────────────────────
-add_executable(${PROJECT_NAME})
 
 include(cmake/Sanitizers.cmake)
 enable_sanitizers(${PROJECT_NAME})
@@ -23,7 +24,6 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
 )
 
 # ── Compiler warnings ──────────────────────────────────────────────────────────
-# Not optional. Warnings are your first line of defense.
 if(MSVC)
     target_compile_options(${PROJECT_NAME} PRIVATE /W4 /FS)
 else()
@@ -31,3 +31,5 @@ else()
 endif()
 
 add_subdirectory(src)
+enable_testing()
+add_subdirectory(tests)
