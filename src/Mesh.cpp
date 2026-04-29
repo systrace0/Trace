@@ -2,11 +2,11 @@
 
 namespace trace
 {
-	Mesh::Mesh(const F32* vertices, U32 vertexSize, const U32* indices, U32 indexCount)
+	Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<U32>& indices)
 		// By the time it reaches the body - vbo and ebo data is on the GPU via their constructors
-		: m_vbo(vertices, vertexSize)
-		, m_ebo(indices, indexCount)
-		, m_indexCount(indexCount)
+		: m_vbo(vertices.data(), vertices.size() * sizeof(Vertex))
+		, m_ebo(indices.data(), static_cast<U32>(indices.size()))
+		, m_indexCount(static_cast<U32>(indices.size()))
 	{
 		ASSERT(m_vao.id() != 0, "VAO failed to create");
 		ASSERT(m_vbo.id() != 0, "VBO failed to create");
@@ -16,9 +16,9 @@ namespace trace
 		m_vbo.bind();
 		m_ebo.bind();
 
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(F32), (void*)0);					// Position
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, position));					// Position
 		glEnableVertexAttribArray(0);																// Enable slot 0
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(F32), (void*)(3 * sizeof(F32))); // Color - starts 12 bytes later
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, color)); // Color - starts 12 bytes later
 		glEnableVertexAttribArray(1);
 	}
 

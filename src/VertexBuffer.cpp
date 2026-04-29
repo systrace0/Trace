@@ -4,7 +4,7 @@
 
 namespace trace
 {
-	VertexBuffer::VertexBuffer(const F32* data, size_t sizeInBytes, GLenum usage)
+	VertexBuffer::VertexBuffer(const void* data, size_t sizeInBytes, GLenum usage)
 	{
 		glGenBuffers(1, &m_id);
 		ASSERT(m_id != 0, "Failed to generate VBO");

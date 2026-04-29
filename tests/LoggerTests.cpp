@@ -1,6 +1,8 @@
 #include <gtest/gtest.h>
+
 #include "Logger.h"
 #include "imgui/panels/LogPanel.h"
+#include "Vertex.h"
 
 // TODO: Fix glad build error
 
@@ -32,4 +34,9 @@ namespace trace
 		EXPECT_EQ(trace::LogPanel::entryCount(), 2);
 	}
 
+	TEST(Vertex, LayoutNoPadding)
+	{
+		EXPECT_EQ(sizeof(trace::Vertex), 24);
+		EXPECT_EQ(offsetof(trace::Vertex, color), 12);
+	}
 } // namespace trace
