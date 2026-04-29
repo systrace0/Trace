@@ -1,3 +1,5 @@
+#include <cstddef>
+
 #include "Window.h"
 #include "Core.h"
 #include "Logger.h"
@@ -17,15 +19,14 @@ int main()
 {
 	Logger::init();
 
-	// TODO: Use struct with positions and color and supply a vector with it - much cleaner
-	F32 vertices[] = {
-		//   position            color
-			 0.0f,  0.5f, 0.0f,  1.0f, 0.0f, 0.0f,  // top
-			-0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,  // bottom left
-			 0.5f, -0.5f, 0.0f,  0.0f, 0.0f, 1.0f,  // bottom right
+	std::vector<Vertex> vertices = {
+		//		Position			Color
+		{{ 0.0f,  0.5f, 0.0f}, {1.0f, 0.0f, 0.0 }},
+		{{-0.5f, -0.5f, 0.0f}, {0.0f, 1.0f, 0.0f}},
+		{{ 0.5f, -0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}}
 	};
 
-	U32 indices[] = {
+	std::vector<U32> indices = {
 		0, 1, 2
 	};
 
@@ -38,7 +39,7 @@ int main()
 	gui.registerDefaultPanels();
 
 	Shader shader("shaders/basic.vert", "shaders/basic.frag");
-	Mesh mesh(vertices, sizeof(vertices), indices, std::size(indices));
+	Mesh mesh(vertices, indices);
 
 	while (!window.shouldClose())
 	{
