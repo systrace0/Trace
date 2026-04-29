@@ -18,6 +18,8 @@ namespace engine
 		void beginFrame();
 		void endFrame();
 
+		void registerDefaultPanels();
+
 		// TODO: Look up unique_ptr on cppreference
 		void addPanel(std::unique_ptr<Panel> panel);
 

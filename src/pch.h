@@ -2,12 +2,14 @@
 
 // OpenGL
 #include <glad/glad.h>
-#include <glfw/glfw3.h>
+#include <GLFW/glfw3.h>
 
 // C++ standard - used broadly across the project
 #include <string>
+#include <vector>
 #include <cstdint>
 #include <cstdio>
+#include <memory>
 
-// Custom header
-#include "Logger.h"
+// Extern
+#include <imgui.h>

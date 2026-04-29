@@ -2,6 +2,9 @@
 
 #include "Core.h"
 
+#include "panels/DebugPanel.h"
+#include "panels/LogPanel.h"
+
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
@@ -55,6 +58,12 @@ namespace engine
 
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+	}
+
+	void ImGuiManager::registerDefaultPanels()
+	{
+		addPanel(std::make_unique<DebugPanel>());
+		addPanel(std::make_unique<LogPanel>());
 	}
 
 	void ImGuiManager::addPanel(std::unique_ptr<Panel> panel)

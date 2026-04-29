@@ -7,6 +7,7 @@
 
 #include "imgui/ImGuiManager.h"
 #include "imgui/panels/DebugPanel.h"
+#include "imgui/panels/LogPanel.h"
 
 #include "glad/glad.h"
 
@@ -34,8 +35,7 @@ int main()
 	Logger::info("Engine initialized successfully.");
 
 	ImGuiManager gui{ window };
-
-	gui.addPanel(std::make_unique<DebugPanel>());
+	gui.registerDefaultPanels();
 
 	Shader shader("shaders/basic.vert", "shaders/basic.frag");
 	Mesh mesh(vertices, sizeof(vertices), indices, std::size(indices));

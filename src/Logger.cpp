@@ -1,5 +1,7 @@
 #include "Logger.h"
 
+#include "imgui/panels/LogPanel.h"
+
 #include <iostream>
 #include <chrono>
 
@@ -18,6 +20,7 @@ namespace
 	constexpr std::string_view COLOR_MAGENTA = "\033[35m";
 	constexpr std::string_view COLOR_CYAN = "\033[36m";
 	constexpr std::string_view COLOR_WHITE = "\033[37m";
+	constexpr std::string_view COLOR_GREY = "\033[90m";
 
 	// Helper function to get the current time formatted as a string
 	static std::string get_timestamp()
@@ -46,23 +49,38 @@ namespace engine
 #endif
 	}
 
+	void Logger::print_debug(std::string_view message)
+	{
+		std::cout << COLOR_GREY << "[" << get_timestamp() << "] [DEBUG]: " << message << COLOR_RESET << '\n';
+
+		LogPanel::push({ std::string(message), get_timestamp(), LogLevel::Debug });
+	}
+
 	void Logger::print_info(std::string_view message)
 	{
 		std::cout << COLOR_WHITE << "[" << get_timestamp() << "] [INFO]: " << message << COLOR_RESET << '\n';
+
+		LogPanel::push({ std::string(message), get_timestamp(), LogLevel::Info });
 	}
 
 	void Logger::print_warn(std::string_view message)
 	{
 		std::cout << COLOR_YELLOW << "[" << get_timestamp() << "] [WARN]: " << message << COLOR_RESET << '\n';
+
+		LogPanel::push({ std::string(message), get_timestamp(), LogLevel::Warn });
 	}
 
 	void Logger::print_error(std::string_view message)
 	{
 		std::cerr << COLOR_RED << "[" << get_timestamp() << "] [ERROR]: " << message << COLOR_RESET << '\n';
+
+		LogPanel::push({ std::string(message), get_timestamp(), LogLevel::Error });
 	}
 
 	void Logger::print_fatal(std::string_view message)
 	{
+		LogPanel::push({ std::string(message), get_timestamp(), LogLevel::Fatal });
+
 		std::cerr << COLOR_MAGENTA << "[" << get_timestamp() << "] [FATAL]: "
 			<< message << COLOR_RESET << '\n';
 		std::abort();
@@ -72,5 +90,7 @@ namespace engine
 	void Logger::print_success(std::string_view message)
 	{
 		std::cout << COLOR_GREEN << "[" << get_timestamp() << "] [SUCCESS]: " << message << COLOR_RESET << '\n';
+
+		LogPanel::push({ std::string(message), get_timestamp(), LogLevel::Success });
 	}
 }
